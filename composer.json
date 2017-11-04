@@ -1,0 +1,42 @@
+{
+    "name": "devop-core/container",
+    "description": "Dependency injection service",
+    "keywords": ["php", "container", "dependency-injection"],
+    "homepage": "https://devop-studio.com",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "DevOp Studio",
+            "email": "core@devop-studio.com",
+            "homepage": "https://devop-studio.com"
+        },
+        {
+            "name": "Zlatin Hristov",
+            "email": "about@z-latko.info",
+            "homepage": "https://z-latko.info",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^5.5.9 || ^7.0",
+        "container-interop/container-interop": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.*"
+    },
+    "provide": {
+        "psr/container-implementation": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "DevOp\\Core\\Container\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DevOp\\Core\\Container\\Test\\": "tests"
+        }
+    }
+}
