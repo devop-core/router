@@ -31,12 +31,12 @@
     },
     "autoload": {
         "psr-4": {
-            "DevOp\\Core\\Container\\": "src"
+            "DevOp\\Core\\Router\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "DevOp\\Core\\Container\\Test\\": "tests"
+            "DevOp\\Core\\Router\\Test\\": "tests"
         }
     }
 }
