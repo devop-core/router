@@ -1,4 +1,9 @@
-# DevOp Http Message Service
+<aside class="notice">
+This package is just PoC (proof of concept).
+**I do not recommend using it in a production environment**
+</aside>
+
+# DevOp Router
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
@@ -7,7 +12,7 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-Simple library to process your configuration parameters
+Sample router system with PSR7/PSR15/PSR17 implementation
 
 ## Install
 
