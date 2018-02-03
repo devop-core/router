@@ -62,7 +62,7 @@ class Route
     }
 
     /**
-     * @return object|callback|array
+     * @return object|callback|string
      */
     public function getCallback()
     {

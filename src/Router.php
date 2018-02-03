@@ -72,7 +72,9 @@ class Router
      */
     public function process(RequestInterface $request, ResponseInterface $response, Route $route)
     {
-        if ($route->getCallback() === 'string') {
+        if (is_callable($route->getCallback())) {
+            return call_user_func_array($route->getCallback(), [$request, $response]);
+        } else if ($route->getCallback() === 'string') {
             if (strchr($route->getCallback(), ':')) {
                 list($controller, $method) = explode(':', $route->getCallback());
             } else {
@@ -80,46 +82,44 @@ class Router
                 $method = '__invoke';
             }
             return call_user_func_array([$controller, $method], [$request, $response]);
-        } else if (is_callable($route->getCallback())) {
-            return call_user_func_array($route->getCallback(), [$request, $response]);
         }
-        
+
         throw new Exceptions\RouteIsNotCallableException();
     }
 
     public function get($name, $pattern, $callback)
     {
-        return $this->add($name, 'GET', $pattern, $callback);
+        return $this->add($name, ['GET'], $pattern, $callback);
     }
 
     public function post($name, $pattern, $callback)
     {
-        return $this->add($name, 'POST', $pattern, $callback);
+        return $this->add($name, ['POST'], $pattern, $callback);
     }
 
     public function put($name, $pattern, $callback)
     {
-        return $this->add($name, 'PUT', $pattern, $callback);
+        return $this->add($name, ['PUT'], $pattern, $callback);
     }
 
     public function delete($name, $pattern, $callback)
     {
-        return $this->add($name, 'DELETE', $pattern, $callback);
+        return $this->add($name, ['DELETE'], $pattern, $callback);
     }
 
     public function options($name, $pattern, $callback)
     {
-        return $this->add($name, 'OPTIONS', $pattern, $callback);
+        return $this->add($name, ['OPTIONS'], $pattern, $callback);
     }
 
     public function patch($name, $pattern, $callback)
     {
-        return $this->add($name, 'PATCH', $pattern, $callback);
+        return $this->add($name, ['PATCH'], $pattern, $callback);
     }
 
     public function head($name, $pattern, $callback)
     {
-        return $this->add($name, 'HEAD', $pattern, $callback);
+        return $this->add($name, ['HEAD'], $pattern, $callback);
     }
 
     public function any($name, $pattern, $callback)
