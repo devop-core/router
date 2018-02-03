@@ -18,7 +18,7 @@ $router->add('anything_else', ['GET'], '/[page:\w]', function() {
 $router->any('anything_else', '/users/[action:\w]/[id:\d+]', function() {
     echo "ANYTHING ELSE" . PHP_EOL;
 });
-
+ 
 function getCurrentUrl()
 {
     $url = '';

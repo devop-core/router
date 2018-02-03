@@ -74,7 +74,7 @@ class Router
     {
         if (is_callable($route->getCallback())) {
             return call_user_func_array($route->getCallback(), [$request, $response]);
-        } else if ($route->getCallback() === 'string') {
+        } else if (is_string($route->getCallback())) {
             if (strchr($route->getCallback(), ':')) {
                 list($controller, $method) = explode(':', $route->getCallback());
             } else {
@@ -82,6 +82,11 @@ class Router
                 $method = '__invoke';
             }
             return call_user_func_array([$controller, $method], [$request, $response]);
+        } else if (is_array($route->getCallback())) {
+            $controller = $route->getCallback()[0];
+            $method= $route->getCallback()[1];
+            $parameters = array_merge([$request, $response], array_slice($route->getCallback(), 2));
+            call_user_func_array([$controller, $method], $parameters);
         }
 
         throw new Exceptions\RouteIsNotCallableException();

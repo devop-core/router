@@ -27,7 +27,7 @@ class Route
     /**
      * @param string $name
      * @param string $pattern
-     * @param object|callback|array $callback
+     * @param object|callback|array|string $callback
      */
     public function __construct($pattern, $callback)
     {
@@ -62,7 +62,7 @@ class Route
     }
 
     /**
-     * @return object|callback|string
+     * @return object|callback|array|string
      */
     public function getCallback()
     {
