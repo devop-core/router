@@ -3,6 +3,7 @@ namespace DevOp\Core\Router;
 
 use DevOp\Core\Router\Route;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class Router
 {
@@ -34,35 +35,56 @@ class Router
         return $this;
     }
 
-    public function match(RequestInterface $request)
-    {
-        if (isset($this->collection[$request->getMethod()])) {
-            foreach ($this->collection[$request->getMethod()] AS /* @var $route Route */ $route) {
-                $match = null;
-                if (preg_match_all($route->getRegEx(), $request->getRequestTarget(), $match)) {
-                    var_dump($match);
-                }
-            }
-        }
-    }
-
     public function getAll()
     {
         return $this->collection;
     }
 
-    public function dispatch($method, $uri)
+    /**
+     * 
+     * @param RequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     * @throws Exceptions\RouteNotFoundException
+     */
+    public function dispatch(RequestInterface $request, ResponseInterface $response)
     {
 
-        if (!isset($this->collection[$method])) {
-            die('$)$');
+        if (!isset($this->collection[$request->getMethod()])) {
+            throw new Exceptions\RouteNotFoundException();
         }
 
-        foreach ($this->collection[$method] AS /* @var $route Route */ $route) {
-            if (preg_match("#^{$route->getPattern()}+$#iu", $uri)) {
-                var_dump($route);
+        $uri = $request->getUri()->getPath();
+        foreach ($this->collection[$request->getMethod()] AS /* @var $route Route */ $route) {
+            if (preg_match("#^{$route->getPattern()}+$#iu", $uri, $match)) {
+                return $this->process($request, $response, $route);
             }
         }
+
+        throw new Exceptions\RouteNotFoundException();
+    }
+
+    /**
+     * 
+     * @param Route $route
+     * @return ResponseInterface
+     * @throws Exceptions\RouteIsNotCallableException
+     */
+    public function process(RequestInterface $request, ResponseInterface $response, Route $route)
+    {
+        if ($route->getCallback() === 'string') {
+            if (strchr($route->getCallback(), ':')) {
+                list($controller, $method) = explode(':', $route->getCallback());
+            } else {
+                $controller = $route->getCallback();
+                $method = '__invoke';
+            }
+            return call_user_func_array([$controller, $method], [$request, $response]);
+        } else if (is_callable($route->getCallback())) {
+            return call_user_func_array($route->getCallback(), [$request, $response]);
+        }
+        
+        throw new Exceptions\RouteIsNotCallableException();
     }
 
     public function get($name, $pattern, $callback)
