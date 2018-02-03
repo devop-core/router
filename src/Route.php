@@ -38,7 +38,7 @@ class Route
     }
 
     /**
-     * @return strings
+     * @return string
      */
     public function getRegEx()
     {
@@ -84,7 +84,6 @@ class Route
         }, $matches);
 
         $replaces = [];
-        $parameters = [];
         foreach ($components AS $route) {
             $placeholder = ltrim($route['value'], '/');
             $optional = substr($route['value'], 0, 1) === '/';
