@@ -1,7 +1,7 @@
-<aside class="notice">
+```
 This package is just PoC (proof of concept).
-**I do not recommend using it in a production environment**
-</aside>
+I do not recommend using it in a production environment**
+```
 
 # DevOp Router
 
@@ -19,12 +19,12 @@ Sample router system with PSR7/PSR15/PSR17 implementation
 Via Composer
 
 ``` bash
-$ composer require devop-core/http
+$ composer require devop-core/router
 ```
 
 ## Change log
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+Please see [CHANGELOG](.github/CHANGELOG.md) for more information on what has changed recently.
 
 ## Testing
 
@@ -34,28 +34,28 @@ $ vendor/bin/phpunit
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
 ## Credits
 
 - [Zlatin Hristov](https://z-latko.info)
-- [All Contributors](https://github.com/devop-core/http/graphs/contributors)
+- [All Contributors](https://github.com/devop-core/router/graphs/contributors)
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File](.github/LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/devop-core/http.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/devop-core/router.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/devop-core/http/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/devop-core/http.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/devop-core/http.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/devop-core/http.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/devop-core/router/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/devop-core/router.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/devop-core/router.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/devop-core/router.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/devop-core/http
-[link-travis]: https://travis-ci.org/devop-core/http
-[link-scrutinizer]: https://scrutinizer-ci.com/g/devop-core/http/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/devop-core/http
-[link-downloads]: https://packagist.org/packages/devop-core/http
+[link-packagist]: https://packagist.org/packages/devop-core/router
+[link-travis]: https://travis-ci.org/devop-core/router
+[link-scrutinizer]: https://scrutinizer-ci.com/g/devop-core/router/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/devop-core/router
+[link-downloads]: https://packagist.org/packages/devop-core/router
 [link-author]: https://github.com/:author_username
 [link-contributors]: ../../contributors
