@@ -73,7 +73,7 @@ class Router
     public function process(RequestInterface $request, ResponseInterface $response, Route $route)
     {
         if (is_callable($route->getCallback())) {
-            return call_user_func_array($route->getCallback(), [$request, $response]);
+            return call_user_func_array(/** @scrutinizer ignore-type */ $route->getCallback(), [$request, $response]);
         } else if (is_string($route->getCallback())) {
             if (strchr($route->getCallback(), ':')) {
                 list($controller, $method) = explode(':', $route->getCallback());

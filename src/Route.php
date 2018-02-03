@@ -20,7 +20,7 @@ class Route
     private $parameters = [];
 
     /**
-     * @var object|callback|array
+     * @var object|callback|array|string
      */
     private $callback;
 
@@ -38,7 +38,7 @@ class Route
     }
 
     /**
-     * @return stringsssss
+     * @return strings
      */
     public function getRegEx()
     {
@@ -83,7 +83,8 @@ class Route
             return ['name' => $values[0], 'value' => $values[1]];
         }, $matches);
 
-        $replaces = $parameters = [];
+        $replaces = [];
+        $parameters = [];
         foreach ($components AS $route) {
             $placeholder = ltrim($route['value'], '/');
             $optional = substr($route['value'], 0, 1) === '/';
