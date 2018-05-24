@@ -1,9 +1,10 @@
-```
-This package is just PoC (proof of concept).
-I do not recommend using it in a production environment**
-```
+# Router library
 
-# DevOp Router
+## Description
+
+> This library is just proof of concept. > We do **NOT** recommended the use of production environment.
+
+Provide router implementation
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
@@ -12,14 +13,12 @@ I do not recommend using it in a production environment**
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-Sample router system with PSR7/PSR15/PSR17 implementation
-
 ## Install
 
-Via Composer
+Package is available on [Packagist](link-packagist), you can install it using [Composer](http://getcomposer.org).
 
 ``` bash
-$ composer require devop-core/router
+composer require devop-core/router
 ```
 
 ## Change log
@@ -36,14 +35,9 @@ $ vendor/bin/phpunit
 
 Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
-## Credits
-
-- [Zlatin Hristov](https://z-latko.info)
-- [All Contributors](https://github.com/devop-core/router/graphs/contributors)
-
 ## License
 
-The MIT License (MIT). Please see [License File](.github/LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File](LICENSE) for more information.
 
 [ico-version]: https://img.shields.io/packagist/v/devop-core/router.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
