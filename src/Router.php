@@ -43,7 +43,7 @@ class Router
     /**
      * 
      * @param RequestInterface $request
-     * @return array
+     * @return Route
      * @throws Exceptions\RouteNotFoundException
      */
     public function dispatch(RequestInterface $request)
@@ -57,7 +57,7 @@ class Router
 
         foreach ($this->collection[$request->getMethod()] AS /* @var $route Route */ $route) {
             if (preg_match("#^{$route->getRegEx()}+$#iu", $uri, $match)) {
-                return $this->process($request, $route, $match);
+                return $this->process($route, $match);
             }
         }
 
@@ -65,14 +65,12 @@ class Router
     }
 
     /**
-     * @param RequestInterface $request
-     * @param ResponseInterface $response
      * @param Route $route
      * @param array $match
-     * @return array
+     * @return Route
      * @throws Exceptions\RouteIsNotCallableException
      */
-    public function process(RequestInterface $request, Route $route, $match)
+    public function process(Route $route, $match)
     {
         
         $arguments = [];
