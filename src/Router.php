@@ -55,9 +55,10 @@ class Router
         }
 
         $uri = $request->getUri()->getPath();
+
         foreach ($this->collection[$request->getMethod()] AS /* @var $route Route */ $route) {
-            if (preg_match("#^{$route->getPattern()}+$#iu", $uri, $match)) {
-                return $this->process($request, $response, $route);
+            if (preg_match("#^{$route->getRegEx()}+$#iu", $uri, $match)) {
+                return $this->process($route, $match);
             }
         }
 
@@ -65,31 +66,23 @@ class Router
     }
 
     /**
-     * 
      * @param Route $route
-     * @return ResponseInterface
+     * @param mixed $match
+     * @return array
      * @throws Exceptions\RouteIsNotCallableException
      */
-    public function process(RequestInterface $request, ResponseInterface $response, Route $route)
+    public function process(Route $route, $match)
     {
-        if (is_callable($route->getCallback())) {
-            return call_user_func_array(/** @scrutinizer ignore-type */ $route->getCallback(), [$request, $response]);
-        } else if (is_string($route->getCallback())) {
-            if (strchr($route->getCallback(), ':')) {
-                list($controller, $method) = explode(':', $route->getCallback());
-            } else {
-                $controller = $route->getCallback();
-                $method = '__invoke';
-            }
-            return call_user_func_array([$controller, $method], [$request, $response]);
-        } else if (is_array($route->getCallback())) {
-            $controller = $route->getCallback()[0];
-            $method= $route->getCallback()[1];
-            $parameters = array_merge([$request, $response], array_slice($route->getCallback(), 2));
-            call_user_func_array([$controller, $method], $parameters);
+        if (is_callable($route->getCallback(), true)) {
+            return [
+                'callable' => $route->getCallback(),
+                'arguments' => array_map(function($value) use ($match) {
+                    return isset($match[$value]) ? $match[$value] : null;
+                }, $route->getParameters())
+            ];
         }
 
-        throw new Exceptions\RouteIsNotCallableException();
+        throw new Exceptions\RouteIsNotCallableException(sprintf('Callback %s is not callable', $route->getCallback()));
     }
 
     public function get($name, $pattern, $callback)
