@@ -43,11 +43,10 @@ class Router
     /**
      * 
      * @param RequestInterface $request
-     * @param ResponseInterface $response
-     * @return ResponseInterface
+     * @return array
      * @throws Exceptions\RouteNotFoundException
      */
-    public function dispatch(RequestInterface $request, ResponseInterface $response)
+    public function dispatch(RequestInterface $request)
     {
 
         if (!isset($this->collection[$request->getMethod()])) {
@@ -58,7 +57,7 @@ class Router
 
         foreach ($this->collection[$request->getMethod()] AS /* @var $route Route */ $route) {
             if (preg_match("#^{$route->getRegEx()}+$#iu", $uri, $match)) {
-                return $this->process($route, $match);
+                return $this->process($request, $route, $match);
             }
         }
 
@@ -66,23 +65,30 @@ class Router
     }
 
     /**
+     * @param RequestInterface $request
+     * @param ResponseInterface $response
      * @param Route $route
-     * @param mixed $match
+     * @param array $match
      * @return array
      * @throws Exceptions\RouteIsNotCallableException
      */
-    public function process(Route $route, $match)
+    public function process(RequestInterface $request, Route $route, $match)
     {
-        if (is_callable($route->getCallback(), true)) {
-            return [
-                'callable' => $route->getCallback(),
-                'arguments' => array_map(function($value) use ($match) {
-                    return isset($match[$value]) ? $match[$value] : null;
-                }, $route->getParameters())
-            ];
+        
+        $arguments = [];
+        foreach ($route->getParameters() AS $param) {
+            if (isset($match[$param])) {
+                $arguments[$param] = $match[$param];
+            }
         }
 
-        throw new Exceptions\RouteIsNotCallableException(sprintf('Callback %s is not callable', $route->getCallback()));
+        $route->setValues($arguments);
+        
+        if (is_callable($route->getCallback(), true)) {
+            return $route;
+        }
+        
+        throw new Exceptions\RouteIsNotCallableException;
     }
 
     public function get($name, $pattern, $callback)

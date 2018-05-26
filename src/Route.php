@@ -15,6 +15,12 @@ class Route
     private $regEx;
 
     /**
+     *
+     * @var array
+     */
+    private $values;
+    
+    /**
      * @var array
      */
     private $parameters = [];
@@ -36,7 +42,23 @@ class Route
 
         $this->compile($pattern);
     }
+    
+    /**
+     * 
+     * @return array
+     */
+    public function getValues()
+    {
+        return $this->values;
+    }
 
+    public function setValues(array $values)
+    {
+        $this->values = $values;
+        
+        return $this;
+    }
+    
     /**
      * @return string
      */
