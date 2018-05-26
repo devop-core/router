@@ -21,6 +21,33 @@ Package is available on [Packagist](link-packagist), you can install it using [C
 composer require devop-core/router
 ```
 
+## Usage
+
+``` php
+<?php
+include_once '../vendor/autoload.php';
+
+$router = new DevOp\Core\Router\Router();
+$router->get('page1', '/page1/{name:\w+}/{id}', function($request, $response){
+    $response->getBody()->write('Hello world!');
+    return $response;
+});
+
+$uri = (new DevOp\Core\Http\UriFactory())->createUri('/page1/devop/1');
+$request = (new \DevOp\Core\Http\ServerRequestFactory())->createServerRequest('GET', $uri);
+
+try {
+    /* @var $route \DevOp\Core\Router\Route */
+    $route = $router->dispatch($request);
+} catch (\DevOp\Core\Router\Exceptions\RouteNotFoundException $ex) {
+    var_dump($ex);
+} catch (DevOp\Core\Router\Exceptions\RouteIsNotCallableException $ex) {
+    var_dump($ex);
+}
+
+var_dump($route);
+```
+
 ## Change log
 
 Please see [CHANGELOG](.github/CHANGELOG.md) for more information on what has changed recently.
