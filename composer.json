@@ -2,14 +2,14 @@
     "name": "devop-core/router",
     "description": "PHP Router library",
     "keywords": ["php", "router", "request", "psr7"],
-    "homepage": "https://devop-studio.com",
+    "homepage": "https://www.devop.studio",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
             "name": "DevOp Studio",
-            "email": "core@devop-studio.com",
-            "homepage": "https://devop-studio.com"
+            "email": "core@devop.studio",
+            "homepage": "https://www.devop.studio"
         },
         {
             "name": "Zlatin Hristov",
