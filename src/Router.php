@@ -83,7 +83,7 @@ class Router
 
         $route->setValues($arguments);
 
-        if (is_callable($route->getCallback(), true)) {
+        if (is_callable($route->getCallback())) {
             return $route;
         }
 
