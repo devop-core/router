@@ -18,8 +18,8 @@ class Route
      *
      * @var array
      */
-    private $values;
-    
+    private $values = [];
+
     /**
      * @var array
      */
@@ -42,9 +42,8 @@ class Route
 
         $this->compile($pattern);
     }
-    
+
     /**
-     * 
      * @return array
      */
     public function getValues()
@@ -52,13 +51,17 @@ class Route
         return $this->values;
     }
 
+    /**
+     * @param array $values
+     * @return $this
+     */
     public function setValues(array $values)
     {
         $this->values = $values;
-        
+
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -104,7 +107,7 @@ class Route
             $this->regEx = "{$pattern}";
             return;
         }
-        
+
         $components = array_map(function($values) {
             return ['name' => $values[0], 'value' => $values[1]];
         }, $matches);

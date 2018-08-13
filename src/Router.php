@@ -3,7 +3,6 @@ namespace DevOp\Core\Router;
 
 use DevOp\Core\Router\Route;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 class Router
 {
@@ -35,13 +34,15 @@ class Router
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getAll()
     {
         return $this->collection;
     }
 
     /**
-     * 
      * @param RequestInterface $request
      * @return Route
      * @throws Exceptions\RouteNotFoundException
@@ -72,7 +73,7 @@ class Router
      */
     public function process(Route $route, $match)
     {
-        
+
         $arguments = [];
         foreach ($route->getParameters() AS $param) {
             if (isset($match[$param])) {
@@ -81,51 +82,100 @@ class Router
         }
 
         $route->setValues($arguments);
-        
+
         if (is_callable($route->getCallback(), true)) {
             return $route;
         }
-        
+
         throw new Exceptions\RouteIsNotCallableException;
     }
 
+    /**
+     * @param string $name
+     * @param string $pattern
+     * @param mixed $callback
+     * @return self
+     */
     public function get($name, $pattern, $callback)
     {
         return $this->add($name, ['GET'], $pattern, $callback);
     }
 
+    /**
+     * @param string $name
+     * @param string $pattern
+     * @param mixed $callback
+     * @return self
+     */
     public function post($name, $pattern, $callback)
     {
         return $this->add($name, ['POST'], $pattern, $callback);
     }
 
+    /**
+     * @param string $name
+     * @param string $pattern
+     * @param mixed $callback
+     * @return self
+     */
     public function put($name, $pattern, $callback)
     {
         return $this->add($name, ['PUT'], $pattern, $callback);
     }
 
+    /**
+     * @param string $name
+     * @param string $pattern
+     * @param mixed $callback
+     * @return self
+     */
     public function delete($name, $pattern, $callback)
     {
         return $this->add($name, ['DELETE'], $pattern, $callback);
     }
 
+    /**
+     * @param string $name
+     * @param string $pattern
+     * @param mixed $callback
+     * @return self
+     */
     public function options($name, $pattern, $callback)
     {
         return $this->add($name, ['OPTIONS'], $pattern, $callback);
     }
 
+    /**
+     * @param string $name
+     * @param string $pattern
+     * @param mixed $callback
+     * @return self
+     */
     public function patch($name, $pattern, $callback)
     {
         return $this->add($name, ['PATCH'], $pattern, $callback);
     }
 
+    /**
+     * @param string $name
+     * @param string $pattern
+     * @param mixed $callback
+     * @return self
+     */
     public function head($name, $pattern, $callback)
     {
         return $this->add($name, ['HEAD'], $pattern, $callback);
     }
 
+    /**
+     * @param string $name
+     * @param string $pattern
+     * @param mixed $callback
+     * @return self
+     */
     public function any($name, $pattern, $callback)
     {
-        return $this->add($name, ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD'], $pattern, $callback);
+        $methods = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD'];
+        return $this->add($name, $methods, $pattern, $callback);
     }
 }
