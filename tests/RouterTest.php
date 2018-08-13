@@ -46,7 +46,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     
     public function testRouterThrowIsNotCallableException()
     {
-        $this->setExpectedException(\DevOp\Core\Router\Exceptions\RouteIsNotCallableException::class);
+        $this->setExpectedException('\DevOp\Core\Router\Exceptions\RouteIsNotCallableException');
         $uri = (new \DevOp\Core\Http\UriFactory())->createUri('/');
         $request = (new \DevOp\Core\Http\RequestFactory())->createRequest('GET', $uri);
         $router = $this->router->add('homepage', ['GET'], '/', 'handler01');
@@ -55,7 +55,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     
     public function testRouterThroNotFoundException()
     {
-        $this->setExpectedException(\DevOp\Core\Router\Exceptions\RouteNotFoundException::class);
+        $this->setExpectedException('\DevOp\Core\Router\Exceptions\RouteNotFoundException');
         $uri = (new \DevOp\Core\Http\UriFactory())->createUri('/');
         $request = (new \DevOp\Core\Http\RequestFactory())->createRequest('POST', $uri);
         $router = $this->router->add('homepage', ['GET'], '/', 'handler01');
