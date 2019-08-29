@@ -1,6 +1,10 @@
 <?php
+
 namespace DevOp\Core\Router\Test;
 
+use DevOp\Core\Http\RequestFactory;
+use DevOp\Core\Http\UriFactory;
+use DevOp\Core\Router\Router;
 use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase
@@ -13,7 +17,7 @@ class RouterTest extends TestCase
 
     public function setUp()
     {
-        $this->router = new \DevOp\Core\Router\Router();
+        $this->router = new Router();
     }
 
     public function testAddRoute()
@@ -49,17 +53,17 @@ class RouterTest extends TestCase
     public function testRouterThrowIsNotCallableException()
     {
         $this->expectException('\DevOp\Core\Router\Exceptions\RouteIsNotCallableException');
-        $uri = (new \DevOp\Core\Http\UriFactory())->createUri('/');
-        $request = (new \DevOp\Core\Http\RequestFactory())->createRequest('GET', $uri);
+        $uri = (new UriFactory())->createUri('/');
+        $request = (new RequestFactory())->createRequest('GET', $uri);
         $router = $this->router->add('homepage', ['GET'], '/', 'handler01');
         $router->dispatch($request);
     }
 
-    public function testRouterThroNotFoundException()
+    public function testRouterThrowNotFoundException()
     {
         $this->expectException('\DevOp\Core\Router\Exceptions\RouteNotFoundException');
-        $uri = (new \DevOp\Core\Http\UriFactory())->createUri('/');
-        $request = (new \DevOp\Core\Http\RequestFactory())->createRequest('POST', $uri);
+        $uri = (new UriFactory())->createUri('/');
+        $request = (new RequestFactory())->createRequest('POST', $uri);
         $router = $this->router->add('homepage', ['GET'], '/', 'handler01');
         $router->dispatch($request);
     }
